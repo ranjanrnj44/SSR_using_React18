@@ -1,0 +1,28 @@
+import express from “express”;
+import { renderToString } from “react-dom/server”;
+import { StaticRouter } from “react-router-dom/server”;
+import fs from “fs”;
+import App from “./src/App”;
+
+const PORT = process.env.PORT || 3001;
+
+const html = fs.readFileSync(“./build/index.html”).toString();
+const splitTexts = [“<div id=‘root’>”, “</div>”];
+const [preHtml, postHtml] = html.split(splitTexts[0]+ splitTexts[1]);
+const app = express();
+
+app.use(express.static(“./build”));
+app.use((req, res) => {
+    const reactApp = (
+        <StaticRouter url={location.url}>
+         <App />
+        </StaticRouter>
+    );
+    const markup = renderToString(reactApp);
+    res.send(`${preHtml}${splitTexts[0]}${markup}${splitTexts[1]}${postHtml}`);
+    res.end();
+})
+
+app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
+});

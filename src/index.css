@@ -1,0 +1,14 @@
+body {
+  font-family: 'Assistant', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(45,45,45);
+  color: white;
+  max-width: 85rem;
+  margin: 0 auto;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
